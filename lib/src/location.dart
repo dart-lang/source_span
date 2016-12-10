@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'span.dart';
+import 'package:path/path.dart' as p;
 
 // TODO(nweiz): Use SourceLocationMixin once we decide to cut a release with
 // breaking changes. See SourceLocationMixin for details.
@@ -43,7 +44,7 @@ class SourceLocation implements Comparable<SourceLocation> {
   ///
   /// [sourceUrl] may be either a [String], a [Uri], or `null`.
   SourceLocation(int offset, {sourceUrl, int line, int column})
-      : sourceUrl = sourceUrl is String ? Uri.parse(sourceUrl) : sourceUrl,
+      : sourceUrl = sourceUrl is String ? p.toUri(sourceUrl) : sourceUrl,
         offset = offset,
         line = line == null ? 0 : line,
         column = column == null ? offset : column {
