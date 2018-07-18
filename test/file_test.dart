@@ -241,7 +241,6 @@ zip zap zop""", url: "bar.dart").span(10, 11);
     test("pointSpan() returns a FileSpan", () {
       var location = file.location(15);
       var span = location.pointSpan();
-      // ignore: deprecated_member_use
       expect(span, new isInstanceOf<FileSpan>());
       expect(span.start, equals(location));
       expect(span.end, equals(location));
@@ -309,7 +308,6 @@ zip zap zop""", url: "bar.dart").span(10, 11);
       });
 
       test("returns a FileSpan for a FileSpan input", () {
-        // ignore: deprecated_member_use
         expect(span.union(file.span(0, 5)), new isInstanceOf<FileSpan>());
       });
 
@@ -317,7 +315,6 @@ zip zap zop""", url: "bar.dart").span(10, 11);
         var other = new SourceSpan(new SourceLocation(0, sourceUrl: "foo.dart"),
             new SourceLocation(5, sourceUrl: "foo.dart"), "hey, ");
         var result = span.union(other);
-        // ignore: deprecated_member_use
         expect(result, isNot(new isInstanceOf<FileSpan>()));
         expect(result.start, equals(other.start));
         expect(result.end, equals(span.end));
