@@ -69,7 +69,26 @@ zip zap zop
   '"""));
   });
 
+  test("works for a point span after the end of the file", () {
+    expect(file.location(39).pointSpan().highlight(), equals("""
+  ,
+3 | zip zap zop
+  |            ^
+  '"""));
+  });
+
   test("works for a point span at the end of the file with no trailing newline",
+      () {
+    file = new SourceFile.fromString("zip zap zop");
+    expect(file.location(10).pointSpan().highlight(), equals("""
+  ,
+1 | zip zap zop
+  |           ^
+  '"""));
+  });
+
+  test(
+      "works for a point span after the end of the file with no trailing newline",
       () {
     file = new SourceFile.fromString("zip zap zop");
     expect(file.location(11).pointSpan().highlight(), equals("""
@@ -157,7 +176,7 @@ zip zap zop
   '"""));
     });
 
-    test("highlights the full last line if it's empty", () {
+    test("highlights the full first line if it's empty", () {
       var file = new SourceFile.fromString("""
 foo
 
