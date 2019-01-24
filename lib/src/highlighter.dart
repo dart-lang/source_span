@@ -138,6 +138,8 @@ class Highlighter {
     if (span.end.column != 0) return span;
 
     if (span.length == 0) {
+      if (span.end.offset == 0) return span;
+
       // If [span] is a point span with an empty context, there's no useful
       // adjustment we can do.
       if (span.context.isEmpty) return span;

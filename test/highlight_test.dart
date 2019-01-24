@@ -53,6 +53,14 @@ zip zap zop
   '"""));
   });
 
+  test("works for a point span at the beginning of the file", () {
+    expect(file.location(0).pointSpan().highlight(), equals("""
+  ,
+1 | foo bar baz
+  | ^
+  '"""));
+  });
+
   test("works for a point span at the end of a line", () {
     expect(file.location(11).pointSpan().highlight(), equals("""
   ,
