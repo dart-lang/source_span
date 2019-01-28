@@ -94,25 +94,23 @@ zip zap zop
   '"""));
     });
 
-    test(
-        "at the end of the file with no trailing newline", () {
-          file = new SourceFile.fromString("zip zap zop");
-          expect(file.location(10).pointSpan().highlight(), equals("""
+    test("at the end of the file with no trailing newline", () {
+      file = new SourceFile.fromString("zip zap zop");
+      expect(file.location(10).pointSpan().highlight(), equals("""
   ,
 1 | zip zap zop
   |           ^
   '"""));
-        });
+    });
 
-    test(
-        "after the end of the file with no trailing newline", () {
-          file = new SourceFile.fromString("zip zap zop");
-          expect(file.location(11).pointSpan().highlight(), equals("""
+    test("after the end of the file with no trailing newline", () {
+      file = new SourceFile.fromString("zip zap zop");
+      expect(file.location(11).pointSpan().highlight(), equals("""
   ,
 1 | zip zap zop
   |            ^
   '"""));
-        });
+    });
 
     test("in an empty file", () {
       expect(new SourceFile.fromString("").location(0).pointSpan().highlight(),
