@@ -161,7 +161,9 @@ class Highlighter {
 
     // The "- 1" here avoids counting the newline itself.
     if (text.codeUnitAt(text.length - 1) == $lf) {
-      return text.length == 1 ? 0 : text.length - text.lastIndexOf("\n", text.length - 2) - 1;
+      return text.length == 1
+          ? 0
+          : text.length - text.lastIndexOf("\n", text.length - 2) - 1;
     } else {
       return text.length - text.lastIndexOf("\n") - 1;
     }
