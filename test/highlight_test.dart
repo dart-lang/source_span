@@ -8,7 +8,7 @@ import 'package:test/test.dart';
 import 'package:source_span/source_span.dart';
 import 'package:source_span/src/colors.dart' as colors;
 
-main() {
+void main() {
   bool oldAscii;
   setUpAll(() {
     oldAscii = glyph.ascii;
@@ -19,7 +19,7 @@ main() {
     glyph.ascii = oldAscii;
   });
 
-  var file;
+  SourceFile file;
   setUp(() {
     file = new SourceFile.fromString("""
 foo bar baz

@@ -5,8 +5,8 @@
 import 'package:test/test.dart';
 import 'package:source_span/source_span.dart';
 
-main() {
-  var file;
+void main() {
+  SourceFile file;
   setUp(() {
     file = new SourceFile.fromString("""
 foo bar baz
@@ -296,7 +296,7 @@ zip zap zop
     });
 
     group("union()", () {
-      var span;
+      FileSpan span;
       setUp(() {
         span = file.span(5, 12);
       });
@@ -359,7 +359,7 @@ zip zap zop
     });
 
     group("expand()", () {
-      var span;
+      FileSpan span;
       setUp(() {
         span = file.span(5, 12);
       });

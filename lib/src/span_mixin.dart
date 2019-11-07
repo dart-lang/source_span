@@ -44,7 +44,7 @@ abstract class SourceSpanMixin implements SourceSpan {
     return new SourceSpan(start, end, text);
   }
 
-  String message(String message, {color}) {
+  String message(String message, {Object color}) {
     var buffer = new StringBuffer();
     buffer.write('line ${start.line + 1}, column ${start.column + 1}');
     if (sourceUrl != null) buffer.write(' of ${p.prettyUri(sourceUrl)}');
@@ -59,12 +59,12 @@ abstract class SourceSpanMixin implements SourceSpan {
     return buffer.toString();
   }
 
-  String highlight({color}) {
+  String highlight({Object color}) {
     if (this is! SourceSpanWithContext && this.length == 0) return "";
     return new Highlighter(this, color: color).highlight();
   }
 
-  bool operator ==(other) =>
+  bool operator ==(Object other) =>
       other is SourceSpan && start == other.start && end == other.end;
 
   int get hashCode => start.hashCode + (31 * end.hashCode);

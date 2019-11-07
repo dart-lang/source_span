@@ -5,8 +5,8 @@
 import 'package:test/test.dart';
 import 'package:source_span/source_span.dart';
 
-main() {
-  var location;
+void main() {
+  SourceLocation location;
   setUp(() {
     location =
         new SourceLocation(15, line: 2, column: 6, sourceUrl: "foo.dart");

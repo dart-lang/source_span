@@ -8,7 +8,7 @@ import 'package:term_glyph/term_glyph.dart' as glyph;
 import 'package:source_span/source_span.dart';
 import 'package:source_span/src/colors.dart' as colors;
 
-main() {
+void main() {
   bool oldAscii;
   setUpAll(() {
     oldAscii = glyph.ascii;
@@ -19,7 +19,7 @@ main() {
     glyph.ascii = oldAscii;
   });
 
-  var span;
+  SourceSpan span;
   setUp(() {
     span = new SourceSpan(new SourceLocation(5, sourceUrl: "foo.dart"),
         new SourceLocation(12, sourceUrl: "foo.dart"), "foo bar");

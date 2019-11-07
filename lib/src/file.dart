@@ -53,12 +53,12 @@ class SourceFile {
   ///
   /// Use [new SourceFile.fromString] instead.
   @Deprecated("Will be removed in 2.0.0")
-  SourceFile(String text, {url}) : this.decoded(text.runes, url: url);
+  SourceFile(String text, {Object url}) : this.decoded(text.runes, url: url);
 
   /// Creates a new source file from [text].
   ///
   /// [url] may be either a [String], a [Uri], or `null`.
-  SourceFile.fromString(String text, {url})
+  SourceFile.fromString(String text, {Object url})
       : this.decoded(text.codeUnits, url: url);
 
   /// Creates a new source file from a list of decoded code units.
@@ -70,7 +70,7 @@ class SourceFile {
   /// surrogate pairs. **This behavior is deprecated**. For
   /// forwards-compatibility, callers should only pass in characters less than
   /// or equal to `0xFFFF`.
-  SourceFile.decoded(Iterable<int> decodedChars, {url})
+  SourceFile.decoded(Iterable<int> decodedChars, {Object url})
       : url = url is String ? Uri.parse(url) : url,
         _decodedChars = new Uint32List.fromList(decodedChars.toList()) {
     for (var i = 0; i < _decodedChars.length; i++) {
@@ -362,15 +362,16 @@ class _FileSpan extends SourceSpanMixin implements FileSpan {
     return span;
   }
 
-  bool operator ==(other) {
+  bool operator ==(Object other) {
     if (other is! FileSpan) return super == other;
+    final fileSpan = other as FileSpan;
     if (other is! _FileSpan) {
-      return super == other && sourceUrl == other.sourceUrl;
+      return super == other && sourceUrl == fileSpan.sourceUrl;
     }
-
-    return _start == other._start &&
-        _end == other._end &&
-        sourceUrl == other.sourceUrl;
+    final _fileSpan = other as _FileSpan;
+    return _start == _fileSpan._start &&
+        _end == _fileSpan._end &&
+        sourceUrl == _fileSpan.sourceUrl;
   }
 
   // Eliminates dart2js warning about overriding `==`, but not `hashCode`

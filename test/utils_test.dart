@@ -5,7 +5,7 @@
 import 'package:test/test.dart';
 import 'package:source_span/src/utils.dart';
 
-main() {
+void main() {
   group('find line start', () {
     test('skip entries in wrong column', () {
       var context = '0_bb\n1_bbb\n2b____\n3bbb\n';
