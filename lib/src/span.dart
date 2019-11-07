@@ -60,7 +60,7 @@ abstract class SourceSpan implements Comparable<SourceSpan> {
   /// This uses the full range of Unicode characters to highlight the source
   /// span if [glyph.ascii] is `false` (the default), but only uses ASCII
   /// characters if it's `true`.
-  String message(String message, {color});
+  String message(String message, {Object color});
 
   /// Prints the text associated with this span in a user-friendly way.
   ///
@@ -79,7 +79,7 @@ abstract class SourceSpan implements Comparable<SourceSpan> {
   /// This uses the full range of Unicode characters to highlight the source
   /// span if [glyph.ascii] is `false` (the default), but only uses ASCII
   /// characters if it's `true`.
-  String highlight({color});
+  String highlight({Object color});
 }
 
 /// A base class for source spans with [start], [end], and [text] known at

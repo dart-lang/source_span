@@ -37,7 +37,7 @@ abstract class SourceLocationMixin implements SourceLocation {
     return offset - other.offset;
   }
 
-  bool operator ==(other) =>
+  bool operator ==(Object other) =>
       other is SourceLocation &&
       sourceUrl == other.sourceUrl &&
       offset == other.offset;

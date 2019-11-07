@@ -27,7 +27,7 @@ class SourceSpanException implements Exception {
   /// highlight the span's text. If it's `true`, it indicates that the text
   /// should be highlighted using the default color. If it's `false` or `null`,
   /// it indicates that the text shouldn't be highlighted.
-  String toString({color}) {
+  String toString({Object color}) {
     if (span == null) return message;
     return "Error on " + span.message(message, color: color);
   }
@@ -38,7 +38,7 @@ class SourceSpanFormatException extends SourceSpanException
     implements FormatException {
   // This is a getter so that subclasses can override it.
   dynamic get source => _source;
-  final _source;
+  final dynamic _source;
 
   int get offset => span == null ? null : span.start.offset;
 

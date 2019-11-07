@@ -54,7 +54,7 @@ class Highlighter {
   /// color red). If it's `true`, it indicates that the text should be
   /// highlighted using the default color. If it's `false` or `null`, it
   /// indicates that the text shouldn't be highlighted.
-  factory Highlighter(SourceSpan span, {color}) {
+  factory Highlighter(SourceSpan span, {Object color}) {
     if (color == true) color = colors.RED;
     if (color == false) color = null;
 
