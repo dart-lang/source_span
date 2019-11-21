@@ -498,7 +498,7 @@ whiz bang\tboom
       expect(file.span(4, 7).highlight(color: true), equals('''
 ${colors.blue}  ,${colors.none}
 ${colors.blue}1 |${colors.none} foo ${colors.red}bar${colors.none} baz
-${colors.blue}  |${colors.none}     ${colors.red}^^^${colors.none}
+${colors.blue}  |${colors.none} ${colors.red}    ^^^${colors.none}
 ${colors.blue}  '${colors.none}'''));
     });
 
@@ -506,7 +506,7 @@ ${colors.blue}  '${colors.none}'''));
       expect(file.span(4, 7).highlight(color: colors.yellow), equals('''
 ${colors.blue}  ,${colors.none}
 ${colors.blue}1 |${colors.none} foo ${colors.yellow}bar${colors.none} baz
-${colors.blue}  |${colors.none}     ${colors.yellow}^^^${colors.none}
+${colors.blue}  |${colors.none} ${colors.yellow}    ^^^${colors.none}
 ${colors.blue}  '${colors.none}'''));
     });
 
@@ -514,19 +514,19 @@ ${colors.blue}  '${colors.none}'''));
       expect(file.span(4, 34).highlight(color: true), equals('''
 ${colors.blue}  ,${colors.none}
 ${colors.blue}1 |${colors.none}   foo ${colors.red}bar baz${colors.none}
-${colors.blue}  |${colors.none} ${colors.red},-----^${colors.none}
-${colors.blue}2 |${colors.none} ${colors.red}| whiz bang boom${colors.none}
-${colors.blue}3 |${colors.none} ${colors.red}| zip zap${colors.none} zop
-${colors.blue}  |${colors.none} ${colors.red}'-------^${colors.none}
+${colors.blue}  |${colors.none} ${colors.red},${colors.none}${colors.red}-----^${colors.none}
+${colors.blue}2 |${colors.none} ${colors.red}|${colors.none} ${colors.red}whiz bang boom${colors.none}
+${colors.blue}3 |${colors.none} ${colors.red}|${colors.none} ${colors.red}zip zap${colors.none} zop
+${colors.blue}  |${colors.none} ${colors.red}'${colors.none}${colors.red}-------^${colors.none}
 ${colors.blue}  '${colors.none}'''));
     });
 
     test('colorizes a multiline span that highlights full lines', () {
       expect(file.span(0, 39).highlight(color: true), equals('''
 ${colors.blue}  ,${colors.none}
-${colors.blue}1 |${colors.none} ${colors.red}/ foo bar baz${colors.none}
-${colors.blue}2 |${colors.none} ${colors.red}| whiz bang boom${colors.none}
-${colors.blue}3 |${colors.none} ${colors.red}\\ zip zap zop${colors.none}
+${colors.blue}1 |${colors.none} ${colors.red}/${colors.none} ${colors.red}foo bar baz${colors.none}
+${colors.blue}2 |${colors.none} ${colors.red}|${colors.none} ${colors.red}whiz bang boom${colors.none}
+${colors.blue}3 |${colors.none} ${colors.red}\\${colors.none} ${colors.red}zip zap zop${colors.none}
 ${colors.blue}  '${colors.none}'''));
     });
   });
