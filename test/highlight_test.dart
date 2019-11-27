@@ -140,12 +140,28 @@ zip zap zop
   '"""));
   });
 
+  test('highlights text including a trailing newline', () {
+    expect(file.span(8, 12).highlight(), equals("""
+  ,
+1 | foo bar baz
+  |         ^^^
+  '"""));
+  });
+
   test('highlights a single empty line', () {
     expect(
         SourceFile.fromString('foo\n\nbar').span(4, 5).highlight(), equals("""
   ,
 2 | 
   | ^
+  '"""));
+  });
+
+  test('highlights a trailing newline', () {
+    expect(file.span(11, 12).highlight(), equals("""
+  ,
+1 | foo bar baz
+  |            ^
   '"""));
   });
 

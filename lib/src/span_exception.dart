@@ -109,7 +109,8 @@ class MultiSourceSpanFormatException extends MultiSourceSpanException
   @override
   int get offset => span?.start?.offset;
 
-  MultiSourceSpanFormatException(String message, SourceSpan span, String primaryLabel,
-      Map<SourceSpan, String> secondarySpans, [this.source])
+  MultiSourceSpanFormatException(String message, SourceSpan span,
+      String primaryLabel, Map<SourceSpan, String> secondarySpans,
+      [this.source])
       : super(message, span, primaryLabel, secondarySpans);
 }

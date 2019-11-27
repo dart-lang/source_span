@@ -350,8 +350,7 @@ class Highlighter {
                 : vertical);
           } else {
             _colorize(() {
-              _buffer
-                  .write(vertical);
+              _buffer.write(vertical);
             }, color: openedOnThisLineColor);
           }
         }, color: highlight.isPrimary ? _primaryColor : _secondaryColor);
@@ -599,11 +598,15 @@ class _Highlight {
     var end = span.end;
     if (span.text.endsWith('\n') && _isTextAtEndOfContext(span)) {
       text = span.text.substring(0, span.text.length - 1);
-      end = SourceLocation(span.end.offset - 1,
-          sourceUrl: span.sourceUrl,
-          line: span.end.line - 1,
-          column: _lastLineLength(text));
-      start = span.start.offset == span.end.offset ? end : span.start;
+      if (text.isEmpty) {
+        end = start;
+      } else {
+        end = SourceLocation(span.end.offset - 1,
+            sourceUrl: span.sourceUrl,
+            line: span.end.line - 1,
+            column: _lastLineLength(context));
+        start = span.start.offset == span.end.offset ? end : span.start;
+      }
     }
     return SourceSpanWithContext(start, end, text, context);
   }

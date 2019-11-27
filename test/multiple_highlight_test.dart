@@ -108,9 +108,11 @@ gibble bibble bop
 
   test("highlights many layers of overlaps", () {
     expect(
-        file.span(0, 54).highlightMultiple(
-            "one", {file.span(12, 77): "two", file.span(27, 84): "three",
-file.span(39, 88): "four"}),
+        file.span(0, 54).highlightMultiple("one", {
+          file.span(12, 77): "two",
+          file.span(27, 84): "three",
+          file.span(39, 88): "four"
+        }),
         equals("""
   ,
 1 | /--- foo bar baz
@@ -264,7 +266,8 @@ file.span(39, 88): "four"}),
 quibble bibble boop
 ''', url: "file2.txt");
 
-    expect(file.span(31, 34).highlightMultiple("one", {file2.span(8, 14): "two"}),
+    expect(
+        file.span(31, 34).highlightMultiple("one", {file2.span(8, 14): "two"}),
         equals("""
   ,--> file1.txt
 3 | zip zap zop
