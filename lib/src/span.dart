@@ -143,7 +143,7 @@ extension SourceSpanExtension on SourceSpan {
     if (sourceUrl != null) buffer.write(' of ${p.prettyUri(sourceUrl)}');
     buffer
       ..writeln(': $message')
-      ..write(this.highlightMultiple(label, secondarySpans,
+      ..write(highlightMultiple(label, secondarySpans,
           color: color,
           primaryColor: primaryColor,
           secondaryColor: secondaryColor));

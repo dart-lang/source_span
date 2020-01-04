@@ -17,21 +17,21 @@ import 'utils.dart';
 
 /// A class for writing a chunk of text with a particular span highlighted.
 class Highlighter {
-  /// The lines to display.
+  /// The lines to display, including context around the highlighted spans.
   final List<_Line> _lines;
 
-  /// The color to highlight the primary [_highlight] within its context, or
+  /// The color to highlight the primary [_Highlight] within its context, or
   /// `null` if it should not be colored.
   final String _primaryColor;
 
-  /// The color to highlight the secondary [_highlight]s within their context,
+  /// The color to highlight the secondary [_Highlight]s within their context,
   /// or `null` if they should not be colored.
   final String _secondaryColor;
 
   /// The number of characters before the bar in the sidebar.
   final int _paddingBeforeSidebar;
 
-  /// The maximum number of multi-line spans that cover any part of a single
+  /// The maximum number of multiline spans that cover any part of a single
   /// line in [_lines].
   final int _maxMultilineSpans;
 
@@ -88,8 +88,8 @@ class Highlighter {
               for (var entry in secondarySpans.entries)
                 _Highlight(entry.key, label: entry.value)
             ]),
-            color ? primaryColor ?? colors.red : null,
-            color ? secondaryColor ?? colors.blue : null);
+            color ? (primaryColor ?? colors.red) : null,
+            color ? (secondaryColor ?? colors.blue) : null);
 
   Highlighter._(this._lines, this._primaryColor, this._secondaryColor)
       : _paddingBeforeSidebar = 1 +
@@ -302,7 +302,7 @@ class Highlighter {
     // Whether we've written a sidebar indicator for opening a new span on this
     // line, and which color should be used for that indicator's rightward line.
     var openedOnThisLine = false;
-    String openedOnThisLineColor = null;
+    String openedOnThisLineColor;
 
     var currentColor = current == null
         ? null
@@ -502,7 +502,7 @@ class Highlighter {
 
   /// Colors all text written to [_buffer] during [callback], if colorization is
   /// enabled and [color] is not `null`.
-  void _colorize(void callback(), {@required String color}) {
+  void _colorize(void Function() callback, {@required String color}) {
     if (_primaryColor != null && color != null) _buffer.write(color);
     callback();
     if (_primaryColor != null && color != null) _buffer.write(colors.none);

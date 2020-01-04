@@ -83,7 +83,7 @@ class MultiSourceSpanException extends SourceSpanException {
   String toString({color, String secondaryColor}) {
     if (span == null) return message;
 
-    bool useColor = false;
+    var useColor = false;
     String primaryColor;
     if (color is String) {
       useColor = true;
