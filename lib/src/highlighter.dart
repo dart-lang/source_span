@@ -237,7 +237,7 @@ class Highlighter {
             highlight.span.start.line == line.number &&
             _isOnlyWhitespace(
                 line.text.substring(0, highlight.span.start.column))) {
-          setFirstNull(highlightsByColumn, highlight);
+          replaceFirstNull(highlightsByColumn, highlight);
         }
       }
 
@@ -389,7 +389,7 @@ class Highlighter {
       _buffer.writeln();
     } else if (highlight.span.start.line == line.number) {
       if (highlightsByColumn.contains(highlight)) return;
-      setFirstNull(highlightsByColumn, highlight);
+      replaceFirstNull(highlightsByColumn, highlight);
 
       _writeSidebar();
       _buffer.write(' ');
@@ -400,7 +400,7 @@ class Highlighter {
     } else if (highlight.span.end.line == line.number) {
       var coversWholeLine = highlight.span.end.column == line.text.length;
       if (coversWholeLine && highlight.label == null) {
-        setToNull(highlightsByColumn, highlight);
+        replaceWithNull(highlightsByColumn, highlight);
         return;
       }
 
@@ -417,7 +417,7 @@ class Highlighter {
         _writeLabel(highlight.label);
       }, color: color);
       _buffer.writeln();
-      setToNull(highlightsByColumn, highlight);
+      replaceWithNull(highlightsByColumn, highlight);
     }
   }
 

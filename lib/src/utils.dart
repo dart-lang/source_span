@@ -34,25 +34,20 @@ bool isAllTheSame(Iterable<Object> iter) {
 bool isMultiline(SourceSpan span) => span.start.line != span.end.line;
 
 /// Sets the first `null` element of [list] to [element].
-void setFirstNull<E>(List<E> list, E element) {
-  for (var i = 0; i < list.length; i++) {
-    if (list[i] == null) {
-      list[i] = element;
-      return;
-    }
-  }
-  throw ArgumentError("$list contains no null elements.");
+void replaceFirstNull<E>(List<E> list, E element) {
+  var index = list.indexOf(null);
+  if (index < 0) throw ArgumentError("$list contains no null elements.");
+  list[index] = element;
 }
 
 /// Sets the element of [list] that currently contains [element] to `null`.
-void setToNull<E>(List<E> list, E element) {
-  for (var i = 0; i < list.length; i++) {
-    if (list[i] == element) {
-      list[i] = null;
-      return;
-    }
+void replaceWithNull<E>(List<E> list, E element) {
+  var index = list.indexOf(element);
+  if (index < 0) {
+    throw ArgumentError("$list contains no elements matching $element.");
   }
-  throw ArgumentError("$list contains no elements matching $element.");
+
+  list[index] = null;
 }
 
 /// Returns the number of instances of [codeUnit] in [string].
