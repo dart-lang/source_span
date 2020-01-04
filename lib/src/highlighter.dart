@@ -5,6 +5,7 @@
 import 'dart:math' as math;
 
 import 'package:charcode/charcode.dart';
+import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 import 'package:term_glyph/term_glyph.dart' as glyph;
@@ -125,82 +126,60 @@ class Highlighter {
   /// Collect all the source lines from the contexts of all spans in
   /// [highlights], and associates them with the highlights that cover them.
   static List<_Line> _collateLines(List<_Highlight> highlights) {
-    _sortHighlights(highlights);
+    var highlightsByUrl =
+        groupBy(highlights, (highlight) => highlight.span.sourceUrl);
+    for (var list in highlightsByUrl.values) {
+      list.sort((highlight1, highlight2) =>
+          highlight1.span.compareTo(highlight2.span));
+    }
 
-    var lines = <_Line>[];
+    return highlightsByUrl.values.expand((highlightsForFile) {
+      // First, create a list of all the lines in the current file that we have
+      // context for along with their line numbers.
+      var lines = <_Line>[];
+      for (var highlight in highlightsForFile) {
+        var context = highlight.span.context;
+        // If [highlight.span.context] contains lines prior to the one
+        // [highlight.span.text] appears on, write those first.
+        var lineStart = findLineStart(
+            context, highlight.span.text, highlight.span.start.column);
+        assert(lineStart != null); // enforced by [_normalizeContext]
 
-    // First, populate [lines] with all the lines that we have context for along
-    // with their line numbers.
-    Uri lastUrl;
-    for (var highlight in highlights) {
-      var context = highlight.span.context;
-      // If [highlight.span.context] contains lines prior to the one
-      // [highlight.span.text] appears on, write those first.
-      var lineStart = findLineStart(
-          context, highlight.span.text, highlight.span.start.column);
-      assert(lineStart != null); // enforced by [_normalizeContext]
+        var linesBeforeSpan =
+            '\n'.allMatches(context.substring(0, lineStart)).length;
 
-      var linesBeforeSpan =
-          '\n'.allMatches(context.substring(0, lineStart)).length;
-
-      var url = highlight.span.sourceUrl;
-      var lineNumber = highlight.span.start.line - linesBeforeSpan;
-      for (var line in context.split('\n')) {
-        // Only add a line if it hasn't already been added for a previous span.
-        if (lines.isEmpty || lineNumber > lines.last.number || url != lastUrl) {
-          lines.add(_Line(line, lineNumber, url));
+        var url = highlight.span.sourceUrl;
+        var lineNumber = highlight.span.start.line - linesBeforeSpan;
+        for (var line in context.split('\n')) {
+          // Only add a line if it hasn't already been added for a previous span.
+          if (lines.isEmpty || lineNumber > lines.last.number) {
+            lines.add(_Line(line, lineNumber, url));
+          }
+          lineNumber++;
         }
-        lineNumber++;
       }
 
-      lastUrl = url;
-    }
+      // Next, associate each line with each highlights that covers it.
+      var activeHighlights = <_Highlight>[];
+      var highlightIndex = 0;
+      for (var line in lines) {
+        activeHighlights.removeWhere((highlight) =>
+            highlight.span.sourceUrl != line.url ||
+            highlight.span.end.line < line.number);
 
-    // Next, associate each line with each highlights that covers it.
-    var activeHighlights = <_Highlight>[];
-    var highlightIndex = 0;
-    for (var line in lines) {
-      activeHighlights.removeWhere((highlight) =>
-          highlight.span.sourceUrl != line.url ||
-          highlight.span.end.line < line.number);
+        var oldHighlightLength = activeHighlights.length;
+        for (var highlight in highlightsForFile.skip(highlightIndex)) {
+          if (highlight.span.start.line > line.number) break;
+          if (highlight.span.sourceUrl != line.url) break;
+          activeHighlights.add(highlight);
+        }
+        highlightIndex += activeHighlights.length - oldHighlightLength;
 
-      var oldHighlightLength = activeHighlights.length;
-      for (var highlight in highlights.skip(highlightIndex)) {
-        if (highlight.span.start.line > line.number) break;
-        if (highlight.span.sourceUrl != line.url) break;
-        activeHighlights.add(highlight);
+        line.highlights.addAll(activeHighlights);
       }
-      highlightIndex += activeHighlights.length - oldHighlightLength;
 
-      line.highlights.addAll(activeHighlights);
-    }
-
-    return lines;
-  }
-
-  /// Sorts [highlights] in-place so that highlights of the same files are
-  /// contiguous, the primary highlight's file appears first, and all highlights
-  /// within a given file are ordered according to their spans.
-  static void _sortHighlights(List<_Highlight> highlights) {
-    if (highlights.length == 1) return;
-
-    // Track the existing order of files to disrupt it as little as possible.
-    var fileOrder = <Uri, int>{};
-    for (var highlight in highlights) {
-      if (highlight.isPrimary) {
-        fileOrder[highlight.span.sourceUrl] = -1;
-      } else {
-        fileOrder.putIfAbsent(highlight.span.sourceUrl, () => fileOrder.length);
-      }
-    }
-
-    highlights.sort((highlight1, highlight2) {
-      var url1 = highlight1.span.sourceUrl;
-      var url2 = highlight2.span.sourceUrl;
-      if (url1 != url2) return fileOrder[url1].compareTo(fileOrder[url2]);
-
-      return highlight1.span.compareTo(highlight2.span);
-    });
+      return lines;
+    }).toList();
   }
 
   /// Returns the highlighted span text.
