@@ -391,7 +391,8 @@ class Highlighter {
         if (coversWholeLine) {
           _buffer.write(glyph.horizontalLine * 3);
         } else {
-          _writeArrow(line, math.max(highlight.span.end.column - 1, 0));
+          _writeArrow(line, math.max(highlight.span.end.column - 1, 0),
+              beginning: false);
         }
         _writeLabel(highlight.label);
       }, color: color);
@@ -421,8 +422,11 @@ class Highlighter {
   }
 
   /// Write an arrow pointing to column [column] in [line].
-  void _writeArrow(_Line line, int column) {
-    var tabs = _countTabs(line.text.substring(0, column));
+  ///
+  /// If the arrow points to a tab character, this will point to the beginning
+  /// of the tab if [beginning] is `true` and the end if it's `false`.
+  void _writeArrow(_Line line, int column, {bool beginning: true}) {
+    var tabs = _countTabs(line.text.substring(0, column + (beginning ? 0 : 1)));
     _buffer
       ..write(glyph.horizontalLine * (1 + column + tabs * (_spacesPerTab - 1)))
       ..write("^");

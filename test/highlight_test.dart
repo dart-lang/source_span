@@ -399,6 +399,21 @@ whiz bang boom
   '"""));
       });
 
+      test('at the beginning of the first highlighted line', () {
+        final span = SourceFile.fromString('''
+foo bar\tbaz
+whiz bang boom
+''').span(7, 21);
+
+        expect(span.highlight(), equals("""
+  ,
+1 |   foo bar    baz
+  | ,--------^
+2 | | whiz bang boom
+  | '---------^
+  '"""));
+      });
+
       test('within a middle highlighted line', () {
         final span = SourceFile.fromString('''
 foo bar baz
@@ -428,6 +443,21 @@ whiz\tbang boom
   | ,-----^
 2 | | whiz    bang boom
   | '------------^
+  '"""));
+      });
+
+      test('at the end of the last highlighted line', () {
+        final span = SourceFile.fromString('''
+foo bar baz
+whiz\tbang boom
+''').span(4, 17);
+
+        expect(span.highlight(), equals("""
+  ,
+1 |   foo bar baz
+  | ,-----^
+2 | | whiz    bang boom
+  | '--------^
   '"""));
       });
 
