@@ -109,9 +109,7 @@ class SourceSpanBase extends SourceSpanMixin {
   }
 }
 
-// Consider moving these to instance methods in the next breaking release, so
-// that downstream classes can override them.
-
+// TODO(#52): Move these to instance methods in the next breaking release.
 /// Extension methods on the base [SourceSpan] API.
 extension SourceSpanExtension on SourceSpan {
   /// Like [SourceSpan.message], but also highlights [secondarySpans] to provide

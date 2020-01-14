@@ -61,16 +61,15 @@ class Highlighter {
   Highlighter(SourceSpan span, {color})
       : this._(_collateLines([_Highlight(span, primary: true)]), () {
           if (color == true) return colors.red;
-          if (color is String) return color;
-          return null;
+          if (color == false) return null;
+          return color as String;
         }(), null);
 
   /// Creates a [Highlighter] that will return a string highlighting
   /// [primarySpan] as well as all the spans in [secondarySpans] within the text
   /// of their file when [highlight] is called.
   ///
-  /// All spans are assumed to be part of the same single source file. Each one
-  /// has an associated label that will be written alongside it. For
+  /// Each span has an associated label that will be written alongside it. For
   /// [primarySpan] this message is [primaryLabel], and for [secondarySpans] the
   /// labels are the map values.
   ///
@@ -106,7 +105,7 @@ class Highlighter {
             .map((line) => line.highlights
                 .where((highlight) => isMultiline(highlight.span))
                 .length)
-            .fold(0, math.max),
+            .reduce(math.max),
         _multipleFiles = !isAllTheSame(_lines.map((line) => line.url));
 
   /// Returns whether [lines] contains any adjacent lines from the same source
@@ -425,7 +424,7 @@ class Highlighter {
   ///
   /// If the arrow points to a tab character, this will point to the beginning
   /// of the tab if [beginning] is `true` and the end if it's `false`.
-  void _writeArrow(_Line line, int column, {bool beginning: true}) {
+  void _writeArrow(_Line line, int column, {bool beginning = true}) {
     var tabs = _countTabs(line.text.substring(0, column + (beginning ? 0 : 1)));
     _buffer
       ..write(glyph.horizontalLine * (1 + column + tabs * (_spacesPerTab - 1)))
