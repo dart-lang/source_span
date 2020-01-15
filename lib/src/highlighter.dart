@@ -52,12 +52,13 @@ class Highlighter {
   /// within the text of its file when [highlight] is called.
   ///
   /// [color] may either be a [String], a [bool], or `null`. If it's a string,
-  /// it indicates an [ANSI terminal color
-  /// escape](https://en.wikipedia.org/wiki/ANSI_escape_code#Colors) that should
-  /// be used to highlight [span]'s text (for example, `"\u001b[31m"` will color
-  /// red). If it's `true`, it indicates that the text should be highlighted
-  /// using the default color. If it's `false` or `null`, it indicates that no
-  /// color should be used.
+  /// it indicates an [ANSI terminal color escape][] that should be used to
+  /// highlight [span]'s text (for example, `"\u001b[31m"` will color red). If
+  /// it's `true`, it indicates that the text should be highlighted using the
+  /// default color. If it's `false` or `null`, it indicates that no color
+  /// should be used.
+  ///
+  /// [ANSI terminal color escape]: https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
   Highlighter(SourceSpan span, {color})
       : this._(_collateLines([_Highlight(span, primary: true)]), () {
           if (color == true) return colors.red;
@@ -73,12 +74,13 @@ class Highlighter {
   /// [primarySpan] this message is [primaryLabel], and for [secondarySpans] the
   /// labels are the map values.
   ///
-  /// If [color] is `true`, this will use [ANSI terminal color
-  /// escapes](https://en.wikipedia.org/wiki/ANSI_escape_code#Colors) to
+  /// If [color] is `true`, this will use [ANSI terminal color escapes][] to
   /// highlight the text. The [primarySpan] will be highlighted with
   /// [primaryColor] (which defaults to red), and the [secondarySpans] will be
   /// highlighted with [secondaryColor] (which defaults to blue). These
   /// arguments are ignored if [color] is `false`.
+  ///
+  /// [ANSI terminal color escape]: https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
   Highlighter.multiple(SourceSpan primarySpan, String primaryLabel,
       Map<SourceSpan, String> secondarySpans,
       {bool color = false, String primaryColor, String secondaryColor})
