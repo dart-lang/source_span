@@ -26,7 +26,7 @@ abstract class SourceSpan implements Comparable<SourceSpan> {
   ///
   /// This may be null, indicating that the source URL is unknown or
   /// unavailable.
-  Uri get sourceUrl;
+  Uri? get sourceUrl;
 
   /// The length of this span, in characters.
   int get length;
@@ -138,7 +138,7 @@ extension SourceSpanExtension on SourceSpan {
   /// [FileSpan]s).
   String messageMultiple(
       String message, String label, Map<SourceSpan, String> secondarySpans,
-      {bool color = false, String primaryColor, String secondaryColor}) {
+      {bool color = false, String? primaryColor, String? secondaryColor}) {
     final buffer = StringBuffer()
       ..write('line ${start.line + 1}, column ${start.column + 1}');
     if (sourceUrl != null) buffer.write(' of ${p.prettyUri(sourceUrl)}');
@@ -173,7 +173,7 @@ extension SourceSpanExtension on SourceSpan {
   /// much more useful output with [SourceSpanWithContext]s (including
   /// [FileSpan]s).
   String highlightMultiple(String label, Map<SourceSpan, String> secondarySpans,
-          {bool color = false, String primaryColor, String secondaryColor}) =>
+          {bool color = false, String? primaryColor, String? secondaryColor}) =>
       Highlighter.multiple(this, label, secondarySpans,
               color: color,
               primaryColor: primaryColor,
