@@ -43,7 +43,7 @@ class SourceSpanFormatException extends SourceSpanException
   @override
   int? get offset => span?.start.offset;
 
-  SourceSpanFormatException(String message, SourceSpan span, [this.source])
+  SourceSpanFormatException(String message, SourceSpan? span, [this.source])
       : super(message, span);
 }
 
@@ -64,7 +64,7 @@ class MultiSourceSpanException extends SourceSpanException {
   /// additional information and helps distinguish it from [secondarySpans].
   final Map<SourceSpan, String> secondarySpans;
 
-  MultiSourceSpanException(String message, SourceSpan span, this.primaryLabel,
+  MultiSourceSpanException(String message, SourceSpan? span, this.primaryLabel,
       Map<SourceSpan, String> secondarySpans)
       : secondarySpans = Map.unmodifiable(secondarySpans),
         super(message, span);
@@ -110,7 +110,7 @@ class MultiSourceSpanFormatException extends MultiSourceSpanException
   @override
   int? get offset => span?.start.offset;
 
-  MultiSourceSpanFormatException(String message, SourceSpan span,
+  MultiSourceSpanFormatException(String message, SourceSpan? span,
       String primaryLabel, Map<SourceSpan, String> secondarySpans,
       [this.source])
       : super(message, span, primaryLabel, secondarySpans);
