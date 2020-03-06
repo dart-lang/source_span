@@ -1,5 +1,9 @@
 # 1.6.1-dev
 
+* Migrate to NNBD.
+  * Apis have been migrated to reflect the existing assumptions in the code
+    and are not expected to be breaking.
+
 # 1.6.0
 
 * Add support for highlighting multiple source spans at once, providing more
