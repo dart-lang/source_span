@@ -17,6 +17,10 @@ dev_dependencies:
   test: ^1.6.0
 
 dependency_overrides:
+  path:
+    git:
+      url: git://github.com/dart-lang/path.git
+      ref: null_safety
   term_glyph:
     git:
       url: git://github.com/dart-lang/term_glyph.git
