@@ -191,7 +191,8 @@ class Highlighter {
     // Each index of this list represents a column after the sidebar that could
     // contain a line indicating an active highlight. If it's `null`, that
     // column is empty; if it contains a highlight, it should be drawn for that column.
-    final highlightsByColumn = List<_Highlight?>(_maxMultilineSpans);
+    final highlightsByColumn =
+        List<_Highlight?>.filled(_maxMultilineSpans, null);
 
     for (var i = 0; i < _lines.length; i++) {
       final line = _lines[i];
