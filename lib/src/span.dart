@@ -181,11 +181,10 @@ extension SourceSpanExtension on SourceSpan {
               secondaryColor: secondaryColor)
           .highlight();
 
-  /// Returns a span from [start] characters (inclusive) to [end] characters
+  /// Returns a span from [start] code units (inclusive) to [end] code units
   /// (exclusive) after the beginning of this span.
   SourceSpan subspan(int start, [int end]) {
-    RangeError.checkValidRange(
-        start, end, length); // TODO: is this the right argument order?
+    RangeError.checkValidRange(start, end, length);
     if (start == 0 && (end == null || end == length)) return this;
 
     final text = this.text;
