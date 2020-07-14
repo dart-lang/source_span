@@ -1,6 +1,6 @@
-# 1.6.1-dev
+# 1.7.0-nullsafety
 
-* Migrate to NNBD.
+* Migrate to null safety.
   * Apis have been migrated to reflect the existing assumptions in the code
     and are not expected to be breaking.
 
