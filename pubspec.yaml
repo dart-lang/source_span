@@ -1,5 +1,5 @@
 name: source_span
-version: 1.7.0-nullsafety
+version: 1.8.0-nullsafety
 
 description: A library for identifying source spans and locations.
 homepage: https://github.com/dart-lang/source_span
