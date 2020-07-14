@@ -1,8 +1,13 @@
-# 1.6.1-dev
+# 1.8.0-nullsafety
 
-* Migrate to NNBD.
+* Migrate to null safety.
   * Apis have been migrated to reflect the existing assumptions in the code
     and are not expected to be breaking.
+    
+# 1.7.0
+
+* Add a `SourceSpan.subspan()` extension method which returns a slice of an
+  existing source span.
 
 # 1.6.0
 
