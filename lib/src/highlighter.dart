@@ -293,7 +293,7 @@ class Highlighter {
             : _secondaryColor;
     var foundCurrent = false;
     for (var tmp in highlightsByColumn) {
-      var highlight = tmp; // Work around https://github.com/dart-lang/sdk/issues/43136
+      final highlight = tmp; // Work around https://github.com/dart-lang/sdk/issues/43136
       final startLine = highlight?.span.start.line;
       final endLine = highlight?.span.end.line;
       if (current != null && highlight == current) {
