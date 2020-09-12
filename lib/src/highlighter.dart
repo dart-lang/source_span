@@ -292,7 +292,8 @@ class Highlighter {
             ? _primaryColor
             : _secondaryColor;
     var foundCurrent = false;
-    for (var highlight in highlightsByColumn) {
+    for (var tmp in highlightsByColumn) {
+      var highlight = tmp; // Work around https://github.com/dart-lang/sdk/issues/43136
       final startLine = highlight?.span.start.line;
       final endLine = highlight?.span.end.line;
       if (current != null && highlight == current) {
@@ -326,9 +327,9 @@ class Highlighter {
             }, color: openedOnThisLineColor);
             openedOnThisLine = true;
             openedOnThisLineColor ??=
-                highlight!.isPrimary ? _primaryColor : _secondaryColor;
+                highlight.isPrimary ? _primaryColor : _secondaryColor;
           } else if (endLine == line.number &&
-              highlight!.span.end.column == line.text.length) {
+              highlight.span.end.column == line.text.length) {
             _buffer.write(highlight.label == null
                 ? glyph.glyphOrAscii('└', '\\')
                 : vertical);
