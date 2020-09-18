@@ -326,9 +326,9 @@ class Highlighter {
             }, color: openedOnThisLineColor);
             openedOnThisLine = true;
             openedOnThisLineColor ??=
-                highlight!.isPrimary ? _primaryColor : _secondaryColor;
+                highlight.isPrimary ? _primaryColor : _secondaryColor;
           } else if (endLine == line.number &&
-              highlight!.span.end.column == line.text.length) {
+              highlight.span.end.column == line.text.length) {
             _buffer.write(highlight.label == null
                 ? glyph.glyphOrAscii('└', '\\')
                 : vertical);
