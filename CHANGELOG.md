@@ -1,6 +1,10 @@
 # 1.8.2-dev
 
-- Require Dart >= 2.14.
+* Fix a bug where highlighting multiple spans with `null` URLs could cause an
+  assertion error. Now when multiple spans are passed with `null` URLs, they're
+  highlighted as though they all come from different source files.
+
+* Require Dart >= 2.14.
 
 # 1.8.1
 
