@@ -2,8 +2,6 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:tuple/tuple.dart';
-
 import 'charcode.dart';
 import 'location.dart';
 import 'span.dart';
@@ -100,9 +98,7 @@ int? findLineStart(String context, String text, int column) {
 ///
 /// This is factored out so it can be shared between
 /// [SourceSpanExtension.subspan] and [SourceSpanWithContextExtension.subspan].
-Tuple2<SourceLocation, SourceLocation> subspanLocations(
-    SourceSpan span, int start,
-    [int? end]) {
+List<SourceLocation> subspanLocations(SourceSpan span, int start, [int? end]) {
   final text = span.text;
   final startLocation = span.start;
   var line = startLocation.line;
@@ -144,5 +140,5 @@ Tuple2<SourceLocation, SourceLocation> subspanLocations(
         sourceUrl: span.sourceUrl, line: line, column: column);
   }
 
-  return Tuple2(newStartLocation, newEndLocation);
+  return [newStartLocation, newEndLocation];
 }

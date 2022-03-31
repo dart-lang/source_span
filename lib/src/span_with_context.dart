@@ -46,6 +46,6 @@ extension SourceSpanWithContextExtension on SourceSpanWithContext {
 
     final locations = subspanLocations(this, start, end);
     return SourceSpanWithContext(
-        locations.item1, locations.item2, text.substring(start, end), context);
+        locations[0], locations[1], text.substring(start, end), context);
   }
 }

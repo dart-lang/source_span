@@ -188,7 +188,6 @@ extension SourceSpanExtension on SourceSpan {
     if (start == 0 && (end == null || end == length)) return this;
 
     final locations = subspanLocations(this, start, end);
-    return SourceSpan(
-        locations.item1, locations.item2, text.substring(start, end));
+    return SourceSpan(locations[0], locations[1], text.substring(start, end));
   }
 }
