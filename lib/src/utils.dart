@@ -93,8 +93,9 @@ int? findLineStart(String context, String text, int column) {
   return null;
 }
 
-/// Returns the start and end locations of the span from [start] code units
-/// (inclusive) to [end] code units (exclusive) after the beginning of [span].
+/// Returns a two-element list containing the start and end locations of the
+/// span from [start] code units (inclusive) to [end] code units (exclusive)
+/// after the beginning of [span].
 ///
 /// This is factored out so it can be shared between
 /// [SourceSpanExtension.subspan] and [SourceSpanWithContextExtension.subspan].
