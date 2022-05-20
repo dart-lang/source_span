@@ -190,4 +190,19 @@ extension SourceSpanExtension on SourceSpan {
     final locations = subspanLocations(this, start, end);
     return SourceSpan(locations[0], locations[1], text.substring(start, end));
   }
+
+  /// Removes leading whitespace and trailing whitespace from [text] and adjust
+  /// [start] and [end].
+  SourceSpan trim() {
+    final trimmed = text.trim();
+    final index = text.indexOf(trimmed);
+    return subspan(index, index + trimmed.length);
+  }
+
+  /// As [trim], but only removes leading whitespace.
+  SourceSpan trimLeft() =>
+      subspan(text.length - text.trimLeft().length, text.length);
+
+  /// As [trim], but only removes trailing whitespace.
+  SourceSpan trimRight() => subspan(0, text.trimRight().length);
 }

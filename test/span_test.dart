@@ -429,4 +429,35 @@ ${colors.blue}  '${colors.none}"""));
       expect(span, isNot(equals(other)));
     });
   });
+
+  group('trim', () {
+    setUp(() {
+      span = SourceSpan(
+        SourceLocation(0, line: 0, column: 0),
+        SourceLocation(14, line: 1, column: 8),
+        'hey \n foo\n bar',
+      ).subspan(3, 11);
+    });
+
+    test('trim()', () {
+      final result = span.trim();
+      expect(result.start, equals(SourceLocation(6, line: 1, column: 1)));
+      expect(result.end, equals(SourceLocation(9, line: 1, column: 4)));
+      expect(result.text, equals('foo'));
+    });
+
+    test('trimLeft()', () {
+      final result = span.trimLeft();
+      expect(result.start, equals(SourceLocation(6, line: 1, column: 1)));
+      expect(result.end, equals(SourceLocation(11, line: 2, column: 1)));
+      expect(result.text, equals('foo\n '));
+    });
+
+    test('trimRight()', () {
+      final result = span.trimRight();
+      expect(result.start, equals(SourceLocation(3, line: 0, column: 3)));
+      expect(result.end, equals(SourceLocation(9, line: 1, column: 4)));
+      expect(result.text, equals(' \n foo'));
+    });
+  });
 }
