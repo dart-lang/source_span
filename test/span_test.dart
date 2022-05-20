@@ -434,7 +434,7 @@ ${colors.blue}  '${colors.none}"""));
     setUp(() {
       span = SourceSpan(
         SourceLocation(0, line: 0, column: 0),
-        SourceLocation(14, line: 1, column: 8),
+        SourceLocation(14, line: 2, column: 4),
         'hey \n foo\n bar',
       ).subspan(3, 11);
     });
