@@ -200,8 +200,7 @@ extension SourceSpanExtension on SourceSpan {
   }
 
   /// As [trim], but only removes leading whitespace.
-  SourceSpan trimLeft() =>
-      subspan(text.length - text.trimLeft().length, text.length);
+  SourceSpan trimLeft() => subspan(length - text.trimLeft().length, length);
 
   /// As [trim], but only removes trailing whitespace.
   SourceSpan trimRight() => subspan(0, text.trimRight().length);
