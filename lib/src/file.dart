@@ -5,6 +5,8 @@
 import 'dart:math' as math;
 import 'dart:typed_data';
 
+import 'package:characters/characters.dart';
+
 import 'location.dart';
 import 'location_mixin.dart';
 import 'span.dart';
@@ -184,7 +186,9 @@ class SourceFile {
       throw RangeError('Line $line comes after offset $offset.');
     }
 
-    return offset - lineStart;
+    final content = _decodedChars.sublist(lineStart, offset);
+    final characters = Characters(String.fromCharCodes(content));
+    return characters.length;
   }
 
   /// Gets the offset for a [line] and [column].
@@ -202,11 +206,16 @@ class SourceFile {
       throw RangeError('Column may not be negative, was $column.');
     }
 
-    final result = _lineStarts[line] + column;
-    if (result > length ||
-        (line + 1 < lines && result >= _lineStarts[line + 1])) {
+    final content = line < lines - 1
+        ? _decodedChars.sublist(_lineStarts[line], _lineStarts[line + 1])
+        : _decodedChars.sublist(_lineStarts[line]);
+    final characters = Characters(String.fromCharCodes(content));
+    if (characters.length < column) {
       throw RangeError("Line $line doesn't have $column columns.");
     }
+    final withinLineLength =
+        characters.take(column).toString().codeUnits.length;
+    final result = _lineStarts[line] + withinLineLength;
 
     return result;
   }
