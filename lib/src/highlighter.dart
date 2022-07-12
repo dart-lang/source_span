@@ -367,12 +367,13 @@ class Highlighter {
       _writeMultilineHighlights(line, highlightsByColumn, current: highlight);
       if (highlightsByColumn.isNotEmpty) _buffer.write(' ');
 
-      _colorize(() {
+      final underlineLength = _colorize(() {
+        final start = _buffer.length;
         _writeUnderline(line, highlight.span,
             highlight.isPrimary ? '^' : glyph.horizontalLineBold);
-        _writeLabel(highlight.label);
+        return _buffer.length - start;
       }, color: color);
-      _buffer.writeln();
+      _writeLabel(highlight, highlightsByColumn, underlineLength);
     } else if (highlight.span.start.line == line.number) {
       if (highlightsByColumn.contains(highlight)) return;
       replaceFirstNull(highlightsByColumn, highlight);
@@ -394,16 +395,17 @@ class Highlighter {
       _buffer.write(' ');
       _writeMultilineHighlights(line, highlightsByColumn, current: highlight);
 
-      _colorize(() {
+      final underlineLength = _colorize(() {
+        final start = _buffer.length;
         if (coversWholeLine) {
           _buffer.write(glyph.horizontalLine * 3);
         } else {
           _writeArrow(line, math.max(highlight.span.end.column - 1, 0),
               beginning: false);
         }
-        _writeLabel(highlight.label);
+        return _buffer.length - start;
       }, color: color);
-      _buffer.writeln();
+      _writeLabel(highlight, highlightsByColumn, underlineLength);
       replaceWithNull(highlightsByColumn, highlight);
     }
   }
@@ -442,9 +444,42 @@ class Highlighter {
       ..write('^');
   }
 
-  /// Writes a space followed by [label] if [label] isn't `null`.
-  void _writeLabel(String? label) {
-    if (label != null) _buffer.write(' $label');
+  /// Writes [highlight]'s label.
+  ///
+  /// The `_buffer` is assumed to be written to the point where the first line
+  /// of `highlight.label` can be written after a space, but this takes care of
+  /// writing indentation and highlight columns for later lines.
+  ///
+  /// The [underlineLength] is the length of the line written between the
+  /// highlights and the beginning of the first label.
+  void _writeLabel(_Highlight highlight, List<_Highlight?> highlightsByColumn,
+      int underlineLength) {
+    final label = highlight.label;
+    if (label == null) {
+      _buffer.writeln();
+      return;
+    }
+
+    final lines = label.split('\n');
+    final color = highlight.isPrimary ? _primaryColor : _secondaryColor;
+    _colorize(() => _buffer.write(' ${lines.first}'), color: color);
+    _buffer.writeln();
+
+    for (var text in lines.skip(1)) {
+      _writeSidebar();
+      _buffer.write(' ');
+      for (var columnHighlight in highlightsByColumn) {
+        if (columnHighlight == null || columnHighlight == highlight) {
+          _buffer.write(' ');
+        } else {
+          _buffer.write(glyph.verticalLine);
+        }
+      }
+
+      _buffer.write(' ' * underlineLength);
+      _colorize(() => _buffer.write(' $text'), color: color);
+      _buffer.writeln();
+    }
   }
 
   /// Writes a snippet from the source text, converting hard tab characters into
@@ -496,10 +531,11 @@ class Highlighter {
 
   /// Colors all text written to [_buffer] during [callback], if colorization is
   /// enabled and [color] is not `null`.
-  void _colorize(void Function() callback, {required String? color}) {
+  T _colorize<T>(T Function() callback, {required String? color}) {
     if (_primaryColor != null && color != null) _buffer.write(color);
-    callback();
+    final result = callback();
     if (_primaryColor != null && color != null) _buffer.write(colors.none);
+    return result;
   }
 }
 
