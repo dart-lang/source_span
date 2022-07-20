@@ -450,6 +450,9 @@ class Highlighter {
   /// of `highlight.label` can be written after a space, but this takes care of
   /// writing indentation and highlight columns for later lines.
   ///
+  /// The [highlightsByColumn] are used to write ongoing highlight lines if the
+  /// label is more than one line long.
+  ///
   /// The [underlineLength] is the length of the line written between the
   /// highlights and the beginning of the first label.
   void _writeLabel(_Highlight highlight, List<_Highlight?> highlightsByColumn,
@@ -558,14 +561,15 @@ class _Highlight {
   /// used in the same message.
   final String? label;
 
-  _Highlight(SourceSpan span, {this.label, bool primary = false})
+  _Highlight(SourceSpan span, {String? label, bool primary = false})
       : span = (() {
           var newSpan = _normalizeContext(span);
           newSpan = _normalizeNewlines(newSpan);
           newSpan = _normalizeTrailingNewline(newSpan);
           return _normalizeEndOfLine(newSpan);
         })(),
-        isPrimary = primary;
+        isPrimary = primary,
+        label = label?.replaceAll('\r\n', '\n');
 
   /// Normalizes [span] to ensure that it's a [SourceSpanWithContext] whose
   /// context actually contains its text at the expected column.
