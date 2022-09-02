@@ -92,7 +92,7 @@ class SourceLocation implements Comparable<SourceLocation> {
   int get hashCode => (sourceUrl?.hashCode ?? 0) + offset;
 
   @override
-  String toString() => '<$runtimeType: $offset $toolString>';
+  String toString() => '<SourceLocation: $offset $toolString>';
 }
 
 /// A base class for source locations with [offset], [line], and [column] known

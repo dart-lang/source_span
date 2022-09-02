@@ -53,6 +53,11 @@ void main() {
     });
   });
 
+  test('toString contains the class type', () {
+    final location = SourceLocation(15, line: 2, column: 6);
+    expect(location.toString(), startsWith('<SourceLocation'));
+  });
+
   test('distance returns the absolute distance between locations', () {
     final other = SourceLocation(10, sourceUrl: 'foo.dart');
     expect(location.distance(other), equals(5));

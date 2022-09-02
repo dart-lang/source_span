@@ -80,5 +80,5 @@ abstract class SourceSpanMixin implements SourceSpan {
   int get hashCode => Object.hash(start, end);
 
   @override
-  String toString() => '<$runtimeType: from $start to $end "$text">';
+  String toString() => '<SourceSpan: from $start to $end "$text">';
 }

@@ -1,7 +1,10 @@
+# 1.9.2
+
+* Remove the use of `runtimeType` from toString methods (#85).
+
 # 1.9.1
 
 * Properly handle multi-line labels for multi-span highlights.
-
 * Populate the pubspec `repository` field.
 
 # 1.9.0

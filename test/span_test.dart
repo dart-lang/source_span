@@ -378,6 +378,11 @@ ${colors.blue}  '${colors.none}"""));
     });
   });
 
+  test('toString contains the class type', () {
+    final span = SourceSpan(SourceLocation(5), SourceLocation(5), '');
+    expect(span.toString(), startsWith('<SourceSpan'));
+  });
+
   group('compareTo()', () {
     test('sorts by start location first', () {
       final other = SourceSpan(SourceLocation(6, sourceUrl: 'foo.dart'),
