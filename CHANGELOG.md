@@ -202,7 +202,7 @@
 # 1.0.0
 
 This package was extracted from the
-[`source_maps`](https://pub.dartlang.org/packages/source_maps) package, but the
+[`source_maps`](https://pub.dev/packages/source_maps) package, but the
 API has many differences. Among them:
 
 * `Span` has been renamed to `SourceSpan` and `Location` has been renamed to
