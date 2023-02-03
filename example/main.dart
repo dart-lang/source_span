@@ -11,14 +11,14 @@ void main(List<String> args) {
   final contents = file.readAsStringSync();
 
   final sourceFile = SourceFile.fromString(contents, url: file.uri);
-  final spans = parseFile(contents, sourceFile);
+  final spans = _parseFile(contents, sourceFile);
 
   for (var span in spans.take(30)) {
     print('[${span.start.line + 1}:${span.start.column + 1}] ${span.text}');
   }
 }
 
-Iterable<SourceSpan> parseFile(String contents, SourceFile sourceFile) sync* {
+Iterable<SourceSpan> _parseFile(String contents, SourceFile sourceFile) sync* {
   var wordStart = 0;
   var inWhiteSpace = true;
 
