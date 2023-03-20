@@ -34,7 +34,7 @@ class SourceFile {
 
   /// The code units of the characters in the file.
   ///
-  /// If this was constructed with the deprecated [new SourceFile] constructor,
+  /// If this was constructed with the deprecated `SourceFile()` constructor,
   /// this will instead contain the code _points_ of the characters in the file
   /// (so characters above 2^16 are represented as individual integers rather
   /// than surrogate pairs).
