@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> This repo has moved to https://github.com/dart-lang/tools/tree/main/pkgs/source_span
+
 [![Dart CI](https://github.com/dart-lang/source_span/actions/workflows/test-package.yml/badge.svg)](https://github.com/dart-lang/source_span/actions/workflows/test-package.yml)
 [![pub package](https://img.shields.io/pub/v/source_span.svg)](https://pub.dev/packages/source_span)
 [![package publisher](https://img.shields.io/pub/publisher/source_span.svg)](https://pub.dev/packages/source_span/publisher)
